@@ -1,5 +1,11 @@
 import styled from "styled-components";
 import QuestionHeader from "./QuestionHeader/QuestionHeader";
+import Input from "../../../ui/Input/Input";
+import { QuestionForm, QuestionType } from "../../../types/questionType";
+import Short from "./QuestionContent/Short/Short";
+import Long from "./QuestionContent/Long/Long";
+import MultiOption from "./QuestionContent/MultiOption/MultiOption";
+import FileUpload from "./QuestionContent/FileUpload/FileUpload";
 
 const Container = styled.div`
   border-radius: 12px;
@@ -9,10 +15,40 @@ const Container = styled.div`
   margin-top: 1.5rem;
 `;
 
-const QuestionContainer = () => {
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1.5rem;
+`;
+
+interface QuestionContainerProps {
+  formData: QuestionForm[number];
+  onChangeType: (type: QuestionType) => void;
+}
+
+const QuestionContainer = (props: QuestionContainerProps) => {
+  const { formData, onChangeType } = props;
+
   return (
     <Container>
-      <QuestionHeader />
+      <QuestionHeader type={formData.type} onChangeType={onChangeType} />
+      <Content>
+        <Input aria-label="question input" placeholder="질문 내용을 200자 이내로 입력해주세요" />
+        {(() => {
+          switch (formData.type) {
+            case "short":
+              return <Short />;
+            case "long":
+              return <Long />;
+            case "checkbox":
+            case "radio":
+              return <MultiOption type={formData.type} />;
+            case "file":
+              return <FileUpload />;
+          }
+        })()}
+      </Content>
     </Container>
   );
 };

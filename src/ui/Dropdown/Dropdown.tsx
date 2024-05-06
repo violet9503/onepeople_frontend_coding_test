@@ -81,17 +81,20 @@ const Listbox = styled("ul")(
 interface DropdownProps {
   items: Array<string>;
   selectedItem: string;
+  onClickItem: (item: string) => void;
 }
 
 const Dropdown = (props: DropdownProps) => {
-  const { items, selectedItem } = props;
+  const { items, selectedItem, onClickItem } = props;
 
   return (
     <BaseDropdown>
       <MenuButton>{selectedItem}</MenuButton>
       <Menu slots={{ listbox: Listbox }}>
         {items.map(item => (
-          <MenuItem>{item}</MenuItem>
+          <MenuItem key={item} onClick={() => onClickItem(item)}>
+            {item}
+          </MenuItem>
         ))}
       </Menu>
     </BaseDropdown>
