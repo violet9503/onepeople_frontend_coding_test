@@ -15,7 +15,7 @@ const InputElement = styled("input")(
     border: 1px solid #DAE2ED;
     box-shadow: 0px 2px 2px #F3F6F9;
 
-    &:hover {
+    &:hover:not(:disabled) {
       border-color: #3399FF;
     }
   `
