@@ -1,6 +1,7 @@
 export type QuestionType = "short" | "long" | "checkbox" | "radio" | "file";
 
 interface DefaultFormData {
+  id: string;
   title: string;
   isRequired: boolean;
 }
