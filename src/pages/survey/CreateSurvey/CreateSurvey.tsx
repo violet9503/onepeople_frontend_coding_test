@@ -16,6 +16,7 @@ const SurveyForm = styled.form`
 
 const CreateSurvey = () => {
   const [surveyForm, setSurveyForm] = useState<QuestionForm>([DEFAULT_FORM_DATA]);
+  const [selectedQuestionId, setSelectedQuestionId] = useState<QuestionForm[number]["id"]>("");
 
   const handleAddQuestion = (index?: number) => {
     const newQuestion = { ...DEFAULT_FORM_DATA, id: crypto.randomUUID() };
@@ -76,8 +77,10 @@ const CreateSurvey = () => {
         <QuestionContainer
           key={formData.id}
           formData={formData}
+          isSelected={selectedQuestionId === formData.id}
           onChangeType={type => handleChangeQuestionType(formData.id, type)}
           onChangeQuestion={updatedQuestion => handleUpdateQuestion(formData.id, updatedQuestion)}
+          onFocusQuestion={() => setSelectedQuestionId(formData.id)}
           onAddQuestion={() => handleAddQuestion(i)}
           onCopyQuestion={() => handleCopyQuestion(formData.id)}
           onDeleteQuestion={() => handleDeleteQuestion(formData.id)}

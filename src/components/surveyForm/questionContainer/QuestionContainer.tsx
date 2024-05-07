@@ -8,10 +8,13 @@ import MultiOption from "./QuestionContent/MultiOption/MultiOption";
 import Short from "./QuestionContent/Short/Short";
 import QuestionHeader from "./QuestionHeader/QuestionHeader";
 
-const Container = styled.div`
+const Container = styled.div<{ $isSelected: boolean }>`
   border-radius: 12px;
   width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 0px 2px 0px;
+  box-shadow: ${props =>
+    props.$isSelected
+      ? `rgba(0, 0, 0, 0.15) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 0px 2px 0px, rgba(101, 88, 255, 0.4) 0px 0px 20px 0px;`
+      : "rgba(0, 0, 0, 0.15) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 0px 2px 0px"};
   padding: 1.5rem;
   margin-top: 1.5rem;
 `;
@@ -25,8 +28,10 @@ const Content = styled.div`
 
 interface QuestionContainerProps {
   formData: QuestionForm[number];
+  isSelected: boolean;
   onChangeType: (type: QuestionType) => void;
   onChangeQuestion: (updatedQuestion: QuestionForm[number]) => void;
+  onFocusQuestion: () => void;
   onAddQuestion: () => void;
   onCopyQuestion: () => void;
   onDeleteQuestion: () => void;
@@ -35,8 +40,10 @@ interface QuestionContainerProps {
 const QuestionContainer = (props: QuestionContainerProps) => {
   const {
     formData,
+    isSelected,
     onChangeType,
     onChangeQuestion,
+    onFocusQuestion,
     onAddQuestion,
     onCopyQuestion,
     onDeleteQuestion,
@@ -51,7 +58,7 @@ const QuestionContainer = (props: QuestionContainerProps) => {
   };
 
   return (
-    <Container>
+    <Container $isSelected={isSelected} onClick={onFocusQuestion}>
       <QuestionHeader
         type={formData.type}
         isRequired={formData.isRequired}
