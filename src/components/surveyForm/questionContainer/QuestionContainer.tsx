@@ -43,7 +43,7 @@ const QuestionContainer = (props: QuestionContainerProps) => {
               return <Long />;
             case "checkbox":
             case "radio":
-              return <MultiOption type={formData.type} />;
+              return <MultiOption formData={formData} />;
             case "file":
               return <FileUpload />;
           }

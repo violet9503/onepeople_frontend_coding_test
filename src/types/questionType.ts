@@ -16,13 +16,13 @@ interface LongForm extends DefaultFormData {
 
 type Option = { isSelected: boolean; optionTitle: string };
 
-interface CheckboxForm extends DefaultFormData {
+export interface CheckboxForm extends DefaultFormData {
   type: "checkbox";
   options: Array<Option>;
   etcOption?: Option;
 }
 
-interface RadioForm extends DefaultFormData {
+export interface RadioForm extends DefaultFormData {
   type: "radio";
   options: Array<Option>;
   etcOption?: Option;
