@@ -51,6 +51,13 @@ const CreateSurvey = () => {
     }
   };
 
+  const handleUpdateQuestion = (
+    id: QuestionForm[number]["id"],
+    updatedQuestion: QuestionForm[number]
+  ) => {
+    setSurveyForm(prev => prev.map(formData => (formData.id === id ? updatedQuestion : formData)));
+  };
+
   return (
     <SurveyForm>
       {surveyForm.map(formData => (
@@ -58,6 +65,7 @@ const CreateSurvey = () => {
           key={formData.id}
           formData={formData}
           onChangeType={type => handleChangeQuestionType(formData.id, type)}
+          onChangeQuestion={updatedQuestion => handleUpdateQuestion(formData.id, updatedQuestion)}
         />
       ))}
       <Button variant="outlined" onClick={() => handleAddQuestion()}>

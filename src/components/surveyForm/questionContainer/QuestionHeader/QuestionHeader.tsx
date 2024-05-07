@@ -21,11 +21,13 @@ const ButtonContainer = styled.div`
 
 interface QuestionHeaderProps {
   type: QuestionType;
+  isRequired: boolean;
   onChangeType: (type: QuestionType) => void;
+  onToggleIsRequired: () => void;
 }
 
 const QuestionHeader = (props: QuestionHeaderProps) => {
-  const { type, onChangeType } = props;
+  const { type, isRequired, onChangeType, onToggleIsRequired } = props;
 
   const handleClickDropdownItem = (label: (typeof QUESTION_LABEL_TEMPLATE)[number]["label"]) => {
     const selectedType = QUESTION_LABEL_TEMPLATE.find(template => template.label === label)?.type;
@@ -37,7 +39,10 @@ const QuestionHeader = (props: QuestionHeaderProps) => {
 
   return (
     <Container>
-      <FormControlLabel control={<Checkbox />} label="필수 항목" />
+      <FormControlLabel
+        control={<Checkbox checked={isRequired} onClick={onToggleIsRequired} />}
+        label="필수 항목"
+      />
       <QuestionRightOption>
         <Dropdown
           items={QUESTION_LABEL_TEMPLATE.map(template => template.label)}
