@@ -21,8 +21,8 @@ const CreateSurvey = () => {
     const newQuestion = { ...DEFAULT_FORM_DATA, id: crypto.randomUUID() };
 
     setSurveyForm(prev =>
-      index
-        ? prev.slice(0, index).concat(newQuestion, prev.slice(index + 1))
+      index !== undefined
+        ? prev.slice(0, index).concat(newQuestion, prev.slice(index))
         : prev.concat(newQuestion)
     );
   };
@@ -58,14 +58,29 @@ const CreateSurvey = () => {
     setSurveyForm(prev => prev.map(formData => (formData.id === id ? updatedQuestion : formData)));
   };
 
+  const handleCopyQuestion = (id: QuestionForm[number]["id"]) => {
+    const copyQuestion = surveyForm.find(formData => formData.id === id);
+
+    if (copyQuestion) {
+      setSurveyForm(prev => prev.concat({ ...copyQuestion, id: crypto.randomUUID() }));
+    }
+  };
+
+  const handleDeleteQuestion = (id: QuestionForm[number]["id"]) => {
+    setSurveyForm(prev => prev.filter(formData => formData.id !== id));
+  };
+
   return (
     <SurveyForm>
-      {surveyForm.map(formData => (
+      {surveyForm.map((formData, i) => (
         <QuestionContainer
           key={formData.id}
           formData={formData}
           onChangeType={type => handleChangeQuestionType(formData.id, type)}
           onChangeQuestion={updatedQuestion => handleUpdateQuestion(formData.id, updatedQuestion)}
+          onAddQuestion={() => handleAddQuestion(i)}
+          onCopyQuestion={() => handleCopyQuestion(formData.id)}
+          onDeleteQuestion={() => handleDeleteQuestion(formData.id)}
         />
       ))}
       <Button variant="outlined" onClick={() => handleAddQuestion()}>

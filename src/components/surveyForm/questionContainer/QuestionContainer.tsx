@@ -27,10 +27,20 @@ interface QuestionContainerProps {
   formData: QuestionForm[number];
   onChangeType: (type: QuestionType) => void;
   onChangeQuestion: (updatedQuestion: QuestionForm[number]) => void;
+  onAddQuestion: () => void;
+  onCopyQuestion: () => void;
+  onDeleteQuestion: () => void;
 }
 
 const QuestionContainer = (props: QuestionContainerProps) => {
-  const { formData, onChangeType, onChangeQuestion } = props;
+  const {
+    formData,
+    onChangeType,
+    onChangeQuestion,
+    onAddQuestion,
+    onCopyQuestion,
+    onDeleteQuestion,
+  } = props;
 
   const handleToggleIsRequired = () => {
     onChangeQuestion({ ...formData, isRequired: !formData.isRequired });
@@ -47,11 +57,15 @@ const QuestionContainer = (props: QuestionContainerProps) => {
         isRequired={formData.isRequired}
         onChangeType={onChangeType}
         onToggleIsRequired={handleToggleIsRequired}
+        onAddQuestion={onAddQuestion}
+        onCopyQuestion={onCopyQuestion}
+        onDeleteQuestion={onDeleteQuestion}
       />
       <Content>
         <Input
           aria-label="question input"
           placeholder="질문 내용을 200자 이내로 입력해주세요"
+          value={formData.title}
           onChange={handleChangeTitle}
         />
         {(() => {
